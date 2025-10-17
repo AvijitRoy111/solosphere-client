@@ -6,7 +6,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, loading } = useContext(AuthContext);
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -35,14 +35,12 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full fixed z-50 bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-700  duration-300 px-4 md:px-12 lg:px-20">
+    <nav className="w-full fixed z-50 bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-700 duration-300 px-4 md:px-12 lg:px-20">
       <div className="flex justify-between items-center h-16">
         {/* Left: Logo */}
         <div className="flex gap-2 items-center">
           <img className="w-auto h-8 brightness-200" src={logo} alt="Logo" />
-          <span className="font-extrabold text-xl text-white">
-            SoloSphere
-          </span>
+          <span className="font-extrabold text-xl text-white">SoloSphere</span>
         </div>
 
         {/* Desktop Menu */}
@@ -51,7 +49,7 @@ const Navbar = () => {
             <li>
               <Link
                 to="/"
-                className="hover:bg-blue-600 hover: px-3 py-1 rounded  duration-200"
+                className="hover:bg-blue-600 px-3 py-1 rounded duration-200"
               >
                 Home
               </Link>
@@ -59,7 +57,7 @@ const Navbar = () => {
             <li>
               <Link
                 to="/allJobs"
-                className="hover:bg-blue-600 hover: px-3 py-1 rounded  duration-200"
+                className="hover:bg-blue-600 px-3 py-1 rounded duration-200"
               >
                 All Jobs
               </Link>
@@ -83,21 +81,23 @@ const Navbar = () => {
           </button>
 
           {/* User Icon / Dropdown */}
-          {user ? (
+          {loading ? (
+            <div className="w-10 h-10 border-4 border-dashed rounded-full animate-spin dark:border-violet-600"></div>
+          ) : user ? (
             <div className="relative">
               <div
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="cursor-pointer w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-blue-500 transition"
+                className="cursor-pointer w-10 h-10 rounded-full overflow-hidden border-2 border-transparent hover:border-blue-500 transition flex items-center justify-center bg-gray-200 dark:bg-gray-700"
               >
                 <img
                   src={user.photoURL}
                   alt="User"
-                  className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
-              {/* Dropdown (only visible in Desktop) */}
+              {/* Dropdown (Desktop only) */}
               {!isMobile && showDropdown && (
                 <div className="absolute right-0 mt-2 w-52 bg-white dark:bg-gray-800 shadow-lg rounded-md p-3 text-gray-800 dark:text-gray-100 z-50">
                   <ul className="flex flex-col gap-2 text-sm font-medium">
@@ -105,7 +105,7 @@ const Navbar = () => {
                       <Link
                         to="/add-job"
                         onClick={() => setShowDropdown(false)}
-                        className="block px-3 py-2 rounded hover:bg-blue-600 hover: transition"
+                        className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                       >
                         Add Job
                       </Link>
@@ -114,7 +114,7 @@ const Navbar = () => {
                       <Link
                         to="/my-posted-job"
                         onClick={() => setShowDropdown(false)}
-                        className="block px-3 py-2 rounded hover:bg-blue-600 hover: transition"
+                        className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                       >
                         My Posted Jobs
                       </Link>
@@ -123,7 +123,7 @@ const Navbar = () => {
                       <Link
                         to="/my-bids"
                         onClick={() => setShowDropdown(false)}
-                        className="block px-3 py-2 rounded hover:bg-blue-600 hover: transition"
+                        className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                       >
                         My Bids
                       </Link>
@@ -132,7 +132,7 @@ const Navbar = () => {
                       <Link
                         to="/bids-request"
                         onClick={() => setShowDropdown(false)}
-                        className="block px-3 py-2 rounded hover:bg-blue-600 hover: transition"
+                        className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                       >
                         Bid Requests
                       </Link>
@@ -140,7 +140,7 @@ const Navbar = () => {
                     <li>
                       <button
                         onClick={handleLogout}
-                        className="w-full text-left bg-gray-200 dark:bg-gray-700 py-2 px-3 rounded hover:bg-blue-500 hover: transition"
+                        className="w-full text-left bg-blue-600 text-white py-2 px-3 rounded hover:bg-blue-700 transition"
                       >
                         Logout
                       </button>
@@ -175,14 +175,22 @@ const Navbar = () => {
           </button>
 
           {/* User Icon */}
-          {user ? (
-            <img
-              src={user.photoURL}
-              alt="User"
-              referrerPolicy="no-referrer"
-              className="w-8 h-8 rounded-full border cursor-pointer"
+          {loading ? (
+            <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+              <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : user ? (
+            <div
+              className="w-8 h-8 rounded-full border cursor-pointer flex items-center justify-center bg-gray-200 dark:bg-gray-700"
               onClick={() => setShowDropdown(!showDropdown)}
-            />
+            >
+              <img
+                src={user.photoURL}
+                alt="User"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
           ) : (
             <User
               className="w-6 h-6 text-gray-800 dark:text-white cursor-pointer"
@@ -195,12 +203,12 @@ const Navbar = () => {
             onClick={() => setMenuOpen(true)}
             className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition"
           >
-            <Menu className="w-6 h-6 text-gray-900 dark:text-white" />
+            <Menu className="w-6 h-6 text-white" />
           </button>
         </div>
       </div>
 
-      {/*  Mobile-only small dropdown */}
+      {/*  Mobile-only dropdown */}
       {isMobile && showDropdown && user && !menuOpen && (
         <div className="absolute right-4 top-16 bg-white dark:bg-gray-800 shadow-lg rounded-md p-3 w-32 z-50">
           <p className="text-sm text-center font-semibold text-gray-700 dark:text-gray-100 mb-2">
@@ -208,7 +216,7 @@ const Navbar = () => {
           </p>
           <button
             onClick={handleLogout}
-            className="w-full bg-gray-200 dark:bg-gray-700 text-white py-1 rounded hover:bg-blue-500  hover: transition"
+            className="w-full bg-blue-600 text-white py-1 rounded hover:bg-blue-700 transition"
           >
             Logout
           </button>
@@ -232,7 +240,7 @@ const Navbar = () => {
               />
             ) : (
               <Link to="/signIn">
-                <User className="w-6 h-6 text-gray-800 dark:text-white" />
+                <User className="w-6 h-6 text-white" />
               </Link>
             )}
             <button
@@ -250,7 +258,7 @@ const Navbar = () => {
             onClick={() => setMenuOpen(false)}
             className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
           >
-            <X className="w-6 h-6 text-gray-800 dark:text-gray-200" />
+            <X className="w-6 h-6 text-white" />
           </button>
         </div>
 
@@ -259,7 +267,7 @@ const Navbar = () => {
             <Link
               to="/"
               onClick={() => setMenuOpen(false)}
-              className="block px-3 py-2 rounded hover:bg-blue-600 hover:"
+              className="block px-3 py-2 rounded hover:bg-blue-600 transition"
             >
               Home
             </Link>
@@ -268,7 +276,7 @@ const Navbar = () => {
             <Link
               to="/allJobs"
               onClick={() => setMenuOpen(false)}
-              className="block px-3 py-2 rounded hover:bg-blue-600 hover:"
+              className="block px-3 py-2 rounded hover:bg-blue-600 transition"
             >
               All Jobs
             </Link>
@@ -280,7 +288,7 @@ const Navbar = () => {
                 <Link
                   to="/add-job"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-3 py-2 rounded hover:bg-blue-600 hover:"
+                  className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                 >
                   Add Job
                 </Link>
@@ -289,7 +297,7 @@ const Navbar = () => {
                 <Link
                   to="/my-posted-job"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-3 py-2 rounded hover:bg-blue-600 hover:"
+                  className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                 >
                   My Posted Jobs
                 </Link>
@@ -298,7 +306,7 @@ const Navbar = () => {
                 <Link
                   to="/my-bids"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-3 py-2 rounded hover:bg-blue-600 hover:"
+                  className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                 >
                   My Bids
                 </Link>
@@ -307,7 +315,7 @@ const Navbar = () => {
                 <Link
                   to="/bids-request"
                   onClick={() => setMenuOpen(false)}
-                  className="block px-3 py-2 rounded hover:bg-blue-600 hover:"
+                  className="block px-3 py-2 rounded hover:bg-blue-600 transition"
                 >
                   Bid Requests
                 </Link>
@@ -318,7 +326,7 @@ const Navbar = () => {
                     handleLogout();
                     setMenuOpen(false);
                   }}
-                  className="w-full bg-gray-200 dark:bg-gray-700  text-white text-center py-2 rounded hover:bg-blue-500 hover: transition"
+                  className="w-full bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-700 transition"
                 >
                   Logout
                 </button>
@@ -329,7 +337,7 @@ const Navbar = () => {
               <Link
                 to="/signIn"
                 onClick={() => setMenuOpen(false)}
-                className="block px-3 py-2 rounded hover:bg-blue-600 hover:"
+                className="block px-3 py-2 rounded hover:bg-blue-600 transition"
               >
                 Login
               </Link>
