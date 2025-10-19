@@ -53,28 +53,28 @@ const AddJob = () => {
   };
 
   return (
-    <div className="w-full flex justify-center items-center min-h-[calc(100vh-306px)] my-12">
-      <section className=" p-2 md:p-6 mx-auto bg-white rounded-md shadow-2xl ">
-        <h2 className="text-lg font-semibold text-gray-700 capitalize ">
+    <div className="w-full flex justify-center items-center min-h-[calc(100vh-306px)] my-6 sm:my-12 px-2">
+      <section className="w-full max-w-[700px] p-4 sm:p-6 bg-white rounded-md shadow-2xl">
+        <h2 className="text-lg font-semibold text-gray-700 capitalize mb-4">
           Post a Job
         </h2>
 
         <form onSubmit={handleJobSunmit}>
-          <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 mt-4 sm:grid-cols-2">
             <div>
-              <label className="text-gray-700 " htmlFor="job_title">
+              <label className="text-gray-700" htmlFor="job_title">
                 Job Title
               </label>
               <input
                 id="job_title"
                 name="job_title"
                 type="text"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                className="block w-full px-3 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
               />
             </div>
 
             <div>
-              <label className="text-gray-700 " htmlFor="emailAddress">
+              <label className="text-gray-700" htmlFor="emailAddress">
                 Email Address
               </label>
               <input
@@ -82,22 +82,21 @@ const AddJob = () => {
                 type="email"
                 name="email"
                 defaultValue={user?.email}
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                className="block w-full px-3 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
               />
             </div>
-            <div className="flex flex-col gap-2 ">
-              <label className="text-gray-700">Deadline</label>
 
-              {/* Date Picker Input Field */}
+            <div className="flex flex-col gap-2">
+              <label className="text-gray-700">Deadline</label>
               <DatePicker
-                className="bg-white text-gray-700 px-6 py-2 border border-gray-300 rounded-md w-full"
+                className="bg-white text-gray-700 px-3 py-2 border border-gray-300 rounded-md w-full"
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
               />
             </div>
 
-            <div className="flex flex-col gap-2 ">
-              <label className="text-gray-70 text-gray-700" htmlFor="category">
+            <div className="flex flex-col gap-2">
+              <label className="text-gray-700" htmlFor="category">
                 Category
               </label>
               <select
@@ -110,53 +109,55 @@ const AddJob = () => {
                 <option value="Digital Marketing">Digital Marketing</option>
               </select>
             </div>
+
             <div>
-              <label className="text-gray-700 " htmlFor="min_price">
+              <label className="text-gray-700" htmlFor="min_price">
                 Minimum Price
               </label>
               <input
                 id="min_price"
                 name="min_price"
                 type="number"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                className="block w-full px-3 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
               />
             </div>
 
             <div>
-              <label className="text-gray-700 " htmlFor="max_price">
+              <label className="text-gray-700" htmlFor="max_price">
                 Maximum Price
               </label>
               <input
                 id="max_price"
                 name="max_price"
                 type="number"
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+                className="block w-full px-3 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
               />
             </div>
           </div>
+
           <div className="flex flex-col gap-2 mt-4">
-            <label className="text-gray-700 " htmlFor="description">
+            <label className="text-gray-700" htmlFor="description">
               Description
             </label>
             <textarea
-              className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md  focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40  focus:outline-none focus:ring"
+              className="block w-full px-3 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring"
               name="description"
               id="description"
+              rows="4"
             ></textarea>
           </div>
+
           <div className="flex justify-end mt-6">
-            <button className="px-8 py-2.5 leading-5   duration-300 transhtmlForm bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+            <button className="px-8 py-2.5 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition">
               Save
             </button>
           </div>
         </form>
       </section>
 
-      {/* Success Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg p-8 w-[350px] h-[300px] text-center border-2 border-green-600">
-            {/* Success Icon with rounded border */}
             <div className="flex justify-center mb-4">
               <div className="w-20 h-20 flex items-center justify-center rounded-full border-4 border-green-600">
                 <svg
@@ -175,18 +176,16 @@ const AddJob = () => {
               </div>
             </div>
 
-            {/* Text */}
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               Your job data added successfully!
             </h2>
 
-            {/* Close Button */}
             <button
               onClick={() => {
                 setIsModalOpen(false);
                 navigate("/my-posted-job");
               }}
-              className="mt-6 px-6 py-2 text-white bg-blue-600  rounded-md hover:bg-blue-700 transition"
+              className="mt-6 px-6 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition"
             >
               Close
             </button>
