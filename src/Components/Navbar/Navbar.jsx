@@ -1,5 +1,4 @@
-import { useTheme } from "../hooks/useTheme";
-import { Sun, Moon, Menu, X, User } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import logo from "../../assets/images/logo.png";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
@@ -7,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user, logOut, loading } = useContext(AuthContext);
-  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -64,21 +62,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Theme toggle */}
-          <button
-            onClick={toggleTheme}
-            className={`p-2 rounded transition ${
-              theme === "light"
-                ? "hover:bg-gray-100 text-gray-700"
-                : "hover:bg-gray-700 text-yellow-400"
-            }`}
-          >
-            {theme === "light" ? (
-              <Moon className="w-5 h-5" />
-            ) : (
-              <Sun className="w-5 h-5" />
-            )}
-          </button>
+         
 
           {/* User Icon / Dropdown */}
           {loading ? (
@@ -159,20 +143,6 @@ const Navbar = () => {
 
         {/* Mobile Right Side */}
         <div className="md:hidden flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className={`p-2 rounded transition ${
-              theme === "light"
-                ? "text-gray-700 hover:bg-gray-100"
-                : "text-yellow-400 hover:bg-gray-700"
-            }`}
-          >
-            {theme === "light" ? (
-              <Moon className="w-5 h-5" />
-            ) : (
-              <Sun className="w-5 h-5" />
-            )}
-          </button>
 
           {/* User Icon */}
           {loading ? (
@@ -243,16 +213,7 @@ const Navbar = () => {
                 <User className="w-6 h-6 text-white" />
               </Link>
             )}
-            <button
-              onClick={toggleTheme}
-              className={`p-2 rounded transition ${
-                theme === "light"
-                  ? "text-gray-700 hover:bg-gray-100"
-                  : "text-yellow-400 hover:bg-gray-700"
-              }`}
-            >
-              {theme === "light" ? <Moon /> : <Sun />}
-            </button>
+            
           </div>
           <button
             onClick={() => setMenuOpen(false)}
